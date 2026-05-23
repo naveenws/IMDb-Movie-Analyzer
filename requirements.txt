@@ -1,0 +1,4 @@
+Flask==3.0.3
+selenium==4.21.0
+webdriver-manager==4.0.1
+packaging==24.0
