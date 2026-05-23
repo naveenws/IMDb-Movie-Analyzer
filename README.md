@@ -104,3 +104,20 @@ When you click **Scrape Top 250**, the frontend starts an `EventSource` subscrip
 On startup, if `movies.csv` is not found, the system auto-generates it using pre-scraped Top 30 movies so the dashboard loads instantly with beautiful widgets.
 When a scrape finishes successfully, it overwrites `movies.csv` with the updated list of movies.
 The `/api/export` route uses Flask's `send_file` to send the `movies.csv` down as a secure downloadable attachment.
+## 📸 Screenshots
+
+### Home Page
+
+![Home Page](screenshots/img1.png)
+
+### Dashboard Analytics
+
+![Dashboard](screenshots/img2.png)
+
+### Charts Section
+
+![Charts](screenshots/img3.png)
+
+### Live Scraping Console
+
+![Console](screenshots/img4.png)
