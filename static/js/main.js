@@ -347,7 +347,9 @@ function triggerLiveScraping() {
     };
     
     // 3. Initiate SSE connection
-    const eventSource = new EventSource('/api/scrape');
+    const movieCount = document.getElementById('movie-count').value;
+
+    const eventSource = new EventSource(`/api/scrape?count=${movieCount}`);
     
     eventSource.onmessage = (event) => {
         try {

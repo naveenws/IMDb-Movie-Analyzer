@@ -66,7 +66,7 @@ class IMDbScraper:
         cleaned = re.sub(r'^\d+\.\s+', '', title_str.strip())
         return cleaned
 
-    def scrape(self, update_progress_callback=None):
+    def scrape(self, update_progress_callback=None, movie_limit=50):
         """
         Executes the main scraping pipeline. 
         Accepts an optional callback function to push progress logs to the frontend.
@@ -104,7 +104,6 @@ class IMDbScraper:
             movie_elements = driver.find_elements(By.CSS_SELECTOR, "li.ipc-metadata-list-summary-item")
             total_found = len(movie_elements)
             log_progress(f"Found {total_found} movie elements. Commencing scraping loop...")
-            movie_limit = int(input("How many movies do you want to scrape? "))
             for idx, element in enumerate(movie_elements[:movie_limit]):
                 try:
                     # 1. Scrape Title
