@@ -9,6 +9,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
+
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -102,8 +104,8 @@ class IMDbScraper:
             movie_elements = driver.find_elements(By.CSS_SELECTOR, "li.ipc-metadata-list-summary-item")
             total_found = len(movie_elements)
             log_progress(f"Found {total_found} movie elements. Commencing scraping loop...")
-            
-            for idx, element in enumerate(movie_elements):
+            movie_limit = int(input("How many movies do you want to scrape? "))
+            for idx, element in enumerate(movie_elements[:movie_limit]):
                 try:
                     # 1. Scrape Title
                     title_elem = element.find_element(By.CSS_SELECTOR, "h3.ipc-title__text")
