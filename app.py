@@ -2,7 +2,7 @@ import os
 import json
 import logging
 import csv
-from flask import Flask, render_template, jsonify, send_file, Response
+from flask import Flask, render_template, jsonify, send_file, Response, request
 from scraper import IMDbScraper
 
 # Configure logging
@@ -94,6 +94,7 @@ def get_movies():
 
 @app.route('/api/scrape', methods=['GET'])
 def trigger_scrape():
+    movie_count = int(request.args.get("count", 50))
     """
     Triggers a live scrape session. Uses Server-Sent Events (SSE) to stream 
     real-time console logs and scraping phases directly to the frontend loading dashboard.
@@ -109,7 +110,10 @@ def trigger_scrape():
             yield f"data: {json.dumps({'type': 'log', 'message': 'Starting Chrome browser in headless mode...'})}\n\n"
             
             # Run the scraper
-            movies = scraper.scrape(update_progress_callback=cb)
+            movies = scraper.scrape(
+                update_progress_callback=cb,
+                movie_limit=movie_count
+            )
             
             # Stream all messages that were queued up
             for msg in messages_queue:
