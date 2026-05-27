@@ -328,12 +328,18 @@ function updateAnalyticsDashboard() {
  * Activates glassmorphic overlay loader and streams terminal progress.
  */
 function triggerLiveScraping() {
+    let movieCount = parseInt(document.getElementById('movie-count').value) || 50;
+    if (movieCount < 1) movieCount = 1;
+    if (movieCount > 250) movieCount = 250;
+    document.getElementById('movie-count').value = movieCount;
+
     // 1. Show dynamic loader overlay
     loadingOverlay.classList.add('active');
     
     // 2. Reset logging terminal console
     consoleLogs.innerHTML = `<div class="console-log-line system">[SYSTEM] Starting IMDb scraping engine...</div>`;
-    scraperStatusText.innerText = "Deploying Chromium Driver...";
+    
+    scraperStatusText.innerText = `Deploying crawler for Top ${movieCount} movies...`;
     
     // Helper to log text lines into logging box
     const appendConsoleLog = (text, type = 'system') => {
@@ -347,8 +353,6 @@ function triggerLiveScraping() {
     };
     
     // 3. Initiate SSE connection
-    const movieCount = document.getElementById('movie-count').value;
-
     const eventSource = new EventSource(`/api/scrape?count=${movieCount}`);
     
     eventSource.onmessage = (event) => {
